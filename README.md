@@ -1,4 +1,4 @@
-# Projeto DevOps Tools e Cloud Computing
+# Projeto DevOps - SPRINT 3
 
 Este repositório contém os scripts e configurações necessárias para realizar o deploy de uma aplicação .NET no Azure Web App, com integração a um banco de dados SQL. Ele inclui também scripts de testes para garantir o correto funcionamento do sistema.
 
