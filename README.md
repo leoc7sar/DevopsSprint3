@@ -103,4 +103,3 @@ Configure a opção de build durante o deploy:
 
 ---
 
-Agora você pode copiar e colar tudo diretamente no seu **README.md**. Ele está organizado em um único texto, com todos os passos e scripts prontos para seguir.
