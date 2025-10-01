@@ -1,0 +1,8 @@
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.csproj.AssemblyReference.cache
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.AssemblyInfoInputs.cache
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.AssemblyInfo.cs
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.csproj.CoreCompileInputs.cache
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Gustavo\projetos\Mottu.Api\obj\Debug\net8.0\Mottu.Api.sourcelink.json

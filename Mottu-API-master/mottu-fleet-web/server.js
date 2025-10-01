@@ -1,0 +1,14 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const { sql, getPool } = require("./db");
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.get("/", function(_, res){ res.send({status:"ok", app:"mottu-fleet-web"}); });
+app.get("/api/motos", function(_, res){ getPool().then(function(pool){ return pool.request().query("SELECT id, placa, modelo, status FROM motos ORDER BY id"); }).then(function(r){ res.json(r.recordset); }).catch(function(e){ res.status(500).json({error:e.message}); }); });
+app.get("/api/motos/:id", function(req, res){ getPool().then(function(pool){ return pool.request().input("id", sql.Int, parseInt(req.params.id)).query("SELECT id, placa, modelo, status FROM motos WHERE id=@id"); }).then(function(r){ if(r.recordset.length===0){ res.status(404).json({msg:"not found"}); } else { res.json(r.recordset[0]); } }).catch(function(e){ res.status(500).json({error:e.message}); }); });
+app.post("/api/motos", function(req, res){ var b=req.body; getPool().then(function(pool){ return pool.request().input("placa", sql.NVarChar(10), b.placa).input("modelo", sql.NVarChar(50), b.modelo).input("status", sql.NVarChar(20), b.status).query("INSERT INTO motos (placa, modelo, status) OUTPUT INSERTED.* VALUES (@placa,@modelo,@status)"); }).then(function(r){ res.status(201).json(r.recordset[0]); }).catch(function(e){ res.status(500).json({error:e.message}); }); });
+app.put("/api/motos/:id", function(req, res){ var b=req.body; getPool().then(function(pool){ return pool.request().input("id", sql.Int, parseInt(req.params.id)).input("placa", sql.NVarChar(10), b.placa).input("modelo", sql.NVarChar(50), b.modelo).input("status", sql.NVarChar(20), b.status).query("UPDATE motos SET placa=@placa, modelo=@modelo, status=@status WHERE id=@id; SELECT id, placa, modelo, status FROM motos WHERE id=@id"); }).then(function(r){ if(r.recordset.length===0){ res.status(404).json({msg:"not found"}); } else { res.json(r.recordset[0]); } }).catch(function(e){ res.status(500).json({error:e.message}); }); });
+app.delete("/api/motos/:id", function(req, res){ getPool().then(function(pool){ return pool.request().input("id", sql.Int, parseInt(req.params.id)).query("DELETE FROM motos OUTPUT DELETED.* WHERE id=@id"); }).then(function(r){ if(r.recordset.length===0){ res.status(404).json({msg:"not found"}); } else { res.json({deleted:r.recordset[0]}); } }).catch(function(e){ res.status(500).json({error:e.message}); }); });
+app.listen(port, function(){ console.log("mottu-fleet-web on :" + port); });

@@ -1,0 +1,154 @@
+###
+# Auth - Autenticação
+###
+
+# @name register
+# Registra um novo usuário
+POST http://localhost:5075/api/v1/Auth/register
+Content-Type: application/json
+
+{
+  "nome": "Novo Usuario",
+  "email": "usuario@teste.com",
+  "senha": "password123"
+}
+
+###
+
+# @name login
+POST http://localhost:5075/api/v1/Auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@mottu.com",
+  "senha": "123456"
+}
+
+> {%
+  client.global.set("token", response.body.token);
+%}
+
+###
+# Motos - CRUD
+###
+
+# @name createMoto
+# Cadastra uma nova moto
+POST http://localhost:5075/api/v1/Motos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "placa": "NEW-9876",
+  "ano": 2024,
+  "modelo": "Sport"
+}
+
+###
+
+# @name getMotoByPlaca
+# Busca a moto cadastrada pela placa
+GET http://localhost:5075/api/v1/Motos/NEW-9876
+Authorization: Bearer {{token}}
+
+###
+
+# @name getAllMotos
+# Lista todas as motos (com paginação)
+GET http://localhost:5075/api/v1/Motos?page=1&pageSize=5
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateMoto
+# Atualiza os dados da moto
+PUT http://localhost:5075/api/v1/Motos/NEW-9876
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "ano": 2025,
+  "modelo": "Pop"
+}
+
+###
+
+# @name deleteMoto
+# Exclui a moto cadastrada
+DELETE http://localhost:5075/api/v1/Motos/NEW-9876
+Authorization: Bearer {{token}}
+
+###
+# Manutenções - CRUD
+###
+
+# @name createManutencao
+# Abre uma nova manutenção para uma moto existente
+POST http://localhost:5075/api/v1/Manutencoes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "placa": "ABC-1234",
+  "problemas": "Freio dianteiro fazendo barulho"
+}
+
+> {%
+  client.global.set("manutencaoId", response.body.id);
+%}
+
+###
+
+# @name getManutencaoById
+# Busca a manutenção pelo ID
+GET http://localhost:5075/api/v1/Manutencoes/{{manutencaoId}}
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateManutencao
+# Atualiza o status da manutenção para Concluida
+PUT http://localhost:5075/api/v1/Manutencoes/{{manutencaoId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "problemas": "Pastilhas de freio trocadas",
+  "status": "Concluida"
+}
+
+###
+
+# @name deleteManutencao
+# Exclui a manutenção
+DELETE http://localhost:5075/api/v1/Manutencoes/{{manutencaoId}}
+Authorization: Bearer {{token}}
+
+###
+# Usuarios
+###
+
+# @name getAllUsuarios
+# Lista todos os usuários
+GET http://localhost:5075/api/v1/Usuarios
+Authorization: Bearer {{token}}
+
+###
+
+# @name updateUsuario
+# Atualiza um usuário (somente nome e senha podem ser alterados)
+PUT http://localhost:5075/api/v1/Usuarios/usuario@teste.com
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nome": "Novo Usuario Alterado",
+  "senha": "newpassword123"
+}
+
+###
+
+# @name deleteUsuario
+# Exclui o usuário de teste
+DELETE http://localhost:5075/api/v1/Usuarios/usuario@teste.com
+Authorization: Bearer {{token}}
